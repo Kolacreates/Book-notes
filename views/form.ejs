@@ -1,0 +1,51 @@
+<%- include("partials/header") %>
+<%
+  const b = locals.book || {};
+  const d = b.date_read ? new Date(b.date_read) : null;
+  const dateVal = d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}` : "";
+%>
+
+<section class="panel">
+  <h1><%= heading %></h1>
+
+  <form method="POST" action="<%= action %>">
+    <div class="field">
+      <label for="title">Title</label>
+      <input id="title" name="title" type="text" required value="<%= b.title || '' %>">
+    </div>
+
+    <div class="field">
+      <label for="author">Author</label>
+      <input id="author" name="author" type="text" required value="<%= b.author || '' %>">
+    </div>
+
+    <div class="field">
+      <label for="isbn">ISBN</label>
+      <input id="isbn" name="isbn" type="text" inputmode="numeric" placeholder="9780735211292" value="<%= b.isbn || '' %>">
+      <p class="hint">Used to fetch the cover from Open Library. Digits only, no dashes.</p>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="rating">Rating out of 10</label>
+        <input id="rating" name="rating" type="number" min="1" max="10" required value="<%= b.rating || '' %>">
+      </div>
+      <div class="field">
+        <label for="date_read">Date read</label>
+        <input id="date_read" name="date_read" type="date" value="<%= dateVal %>">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="notes">Your notes</label>
+      <textarea id="notes" name="notes" rows="7" placeholder="What stayed with you?"><%= b.notes || '' %></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-primary" type="submit"><%= submitLabel %></button>
+      <a class="btn" href="/">Cancel</a>
+    </div>
+  </form>
+</section>
+
+<%- include("partials/footer") %>

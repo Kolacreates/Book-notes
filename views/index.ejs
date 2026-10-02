@@ -1,0 +1,64 @@
+<%- include("partials/header") %>
+<% const current = locals.sort || "recent"; %>
+
+<div class="page-head">
+  <div>
+    <h1>Reading log</h1>
+    <p class="count"><%= books.length %> <%= books.length === 1 ? "book" : "books" %> read, with notes</p>
+  </div>
+  <div class="sort" role="group" aria-label="Sort books">
+    <a class="<%= current === 'recent' ? 'active' : '' %>" href="/?sort=recent">Newest</a>
+    <a class="<%= current === 'rating' ? 'active' : '' %>" href="/?sort=rating">Highest rated</a>
+    <a class="<%= current === 'title' ? 'active' : '' %>" href="/?sort=title">Title A to Z</a>
+  </div>
+</div>
+
+<% if (books.length === 0) { %>
+  <div class="empty">
+    <h2>No books yet</h2>
+    <p>Add the first book you've read, with your rating and notes.</p>
+    <a class="btn btn-primary" href="/new">Add a book</a>
+  </div>
+<% } else { %>
+  <ol class="shelf">
+    <% books.forEach(book => { %>
+      <li class="entry">
+        <div class="cover c<%= book.id % 5 %>">
+          <span class="cover-title"><%= book.title %></span>
+          <img src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-L.jpg?default=false"
+               alt="Cover of <%= book.title %>" loading="lazy" onerror="this.remove()">
+        </div>
+
+        <div class="entry-body">
+          <div class="entry-top">
+            <div>
+              <h2><%= book.title %></h2>
+              <p class="author">by <%= book.author %></p>
+            </div>
+            <div class="score" aria-label="Rated <%= book.rating %> out of 10">
+              <strong><%= book.rating %></strong><span>/10</span>
+              <div class="segs">
+                <% for (let i = 1; i <= 10; i++) { %><i class="<%= i <= book.rating ? 'on' : '' %>"></i><% } %>
+              </div>
+            </div>
+          </div>
+
+          <% if (book.date_read) { %>
+            <p class="read-on">Read on <%= new Date(book.date_read).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) %></p>
+          <% } %>
+
+          <p class="notes"><%= book.notes %></p>
+
+          <div class="actions">
+            <a class="btn" href="/edit/<%= book.id %>">Edit</a>
+            <form method="POST" action="/books/<%= book.id %>?_method=DELETE" onsubmit="return confirm('Delete this book and its notes?')">
+              <button class="btn btn-danger" type="submit">Delete</button>
+            </form>
+          </div>
+        </div>
+      </li>
+    <% }) %>
+  </ol>
+<% } %>
+
+<%- include("partials/footer") %>
