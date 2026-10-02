@@ -1,4 +1,5 @@
 # Book Notes
+![Book Notes homepage](screenshots/home.png)
 
 A personal reading log where I store the books I've read, with ratings,
 notes and covers. Built as a capstone project for The Complete Full-Stack
