@@ -3,17 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book notes</title>
+  <meta name="theme-color" content="#f6f5f0">
+  <title>Dogear — your personal reading library</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/polish.css">
+  <script src="/js/app.js" defer></script>
 </head>
 <body>
   <header class="site-header">
-    <div class="wrap bar">
-      <a class="brand" href="/">Book notes</a>
-      <a class="btn btn-primary" href="/new">Add a book</a>
+    <div class="site-header-inner">
+      <a class="brand" href="/" aria-label="Dogear home"><span class="brand-mark"><%- include("icon", { name: "open-book", iconClass: "brand-icon" }) %></span><span>Dogear</span></a>
+      <nav class="nav" aria-label="Main navigation">
+        <% if (locals.user) { %>
+          <a class="nav-link" href="/">My library</a>
+          <a class="button button-primary header-add" href="/new"><%- include("icon", { name: "plus" }) %> Add a book</a>
+          <span class="nav-divider" aria-hidden="true"></span>
+          <span class="user-chip"><span class="avatar" aria-hidden="true"><%= (user.email || "R").charAt(0).toUpperCase() %></span><span class="user-email"><%= user.email %></span></span>
+          <form method="POST" action="/logout"><button class="nav-link logout-link" type="submit">Log out</button></form>
+        <% } else { %>
+          <a class="nav-link" href="/#about">About</a>
+          <a class="nav-link" href="/login">Log in</a>
+          <a class="button button-primary" href="/register">Create your library <%- include("icon", { name: "arrow" }) %></a>
+        <% } %>
+      </nav>
     </div>
   </header>
-  <main class="wrap">
+  <main class="main-content">

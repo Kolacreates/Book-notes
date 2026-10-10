@@ -5,47 +5,31 @@
   const dateVal = d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}` : "";
 %>
 
-<section class="panel">
-  <h1><%= heading %></h1>
+<section class="form-layout">
+  <div class="form-heading">
+    <a class="back-link" href="/"><%- include("partials/icon", { name: "back" }) %><span>Back to your library</span></a>
+    <p class="eyebrow"><%= b.id ? "UPDATE YOUR LIBRARY" : "ADD TO YOUR LIBRARY" %></p>
+    <h1><%= b.id ? "Edit your note." : "Save a good read." %></h1>
+    <p><%= b.id ? "Keep your details current and your favorite thoughts close." : "Add the details you want to remember. You can always come back and add more." %></p>
+    <div class="form-aside-note"><span class="aside-quote-mark"><%- include("partials/icon", { name: "quote" }) %></span><p>The smallest note can bring an entire book back.</p><span>YOUR READING JOURNAL</span></div>
+  </div>
 
-  <form method="POST" action="<%= action %>">
-    <div class="field">
-      <label for="title">Title</label>
-      <input id="title" name="title" type="text" required value="<%= b.title || '' %>">
-    </div>
+  <div class="form-card">
+    <form method="POST" action="<%= action %>">
+      <div class="form-section-heading"><span class="form-step">01</span><div><h2>The book</h2><p>A few details for your shelf.</p></div></div>
+      <div class="field"><label for="title">Book title <span class="required-mark">*</span></label><input id="title" name="title" type="text" required value="<%= b.title || '' %>" placeholder="e.g. The Creative Act"></div>
+      <div class="field"><label for="author">Author <span class="required-mark">*</span></label><input id="author" name="author" type="text" required value="<%= b.author || '' %>" placeholder="e.g. Kolawole Badmus"></div>
+      <div class="field"><label for="isbn">ISBN <span class="optional-label">OPTIONAL</span></label><input id="isbn" name="isbn" type="text" inputmode="numeric" placeholder="9780735211292" value="<%= b.isbn || '' %>"><p class="hint">We’ll use this to find a cover for your book.</p></div>
 
-    <div class="field">
-      <label for="author">Author</label>
-      <input id="author" name="author" type="text" required value="<%= b.author || '' %>">
-    </div>
-
-    <div class="field">
-      <label for="isbn">ISBN</label>
-      <input id="isbn" name="isbn" type="text" inputmode="numeric" placeholder="9780735211292" value="<%= b.isbn || '' %>">
-      <p class="hint">Used to fetch the cover from Open Library. Digits only, no dashes.</p>
-    </div>
-
-    <div class="row">
-      <div class="field">
-        <label for="rating">Rating out of 10</label>
-        <input id="rating" name="rating" type="number" min="1" max="10" required value="<%= b.rating || '' %>">
+      <div class="form-section-heading notes-section-heading"><span class="form-step">02</span><div><h2>Your reading note</h2><p>When you read it, and what stayed with you.</p></div></div>
+      <div class="row">
+        <div class="field"><label for="rating">Your rating <span class="required-mark">*</span></label><div class="rating-input-wrap"><input id="rating" name="rating" type="number" min="1" max="10" required value="<%= b.rating || '' %>" placeholder="8"><span>/ 10</span></div></div>
+        <div class="field"><label for="date_read">Date finished <span class="optional-label">OPTIONAL</span></label><input id="date_read" name="date_read" type="date" value="<%= dateVal %>"></div>
       </div>
-      <div class="field">
-        <label for="date_read">Date read</label>
-        <input id="date_read" name="date_read" type="date" value="<%= dateVal %>">
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="notes">Your notes</label>
-      <textarea id="notes" name="notes" rows="7" placeholder="What stayed with you?"><%= b.notes || '' %></textarea>
-    </div>
-
-    <div class="form-actions">
-      <button class="btn btn-primary" type="submit"><%= submitLabel %></button>
-      <a class="btn" href="/">Cancel</a>
-    </div>
-  </form>
+      <div class="field notes-field"><label for="notes">Your notes <span class="optional-label">OPTIONAL</span></label><textarea id="notes" name="notes" rows="8" placeholder="A line worth remembering, an idea to return to, or simply how the book made you feel…"><%= b.notes || '' %></textarea><p class="hint">Write for the future you who wants to remember this book.</p></div>
+      <div class="form-actions"><button class="button button-primary" type="submit"><%= submitLabel %><%- include("partials/icon", { name: "arrow" }) %></button><a class="button button-quiet" href="/">Cancel</a></div>
+    </form>
+  </div>
 </section>
 
 <%- include("partials/footer") %>

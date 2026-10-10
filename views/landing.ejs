@@ -1,0 +1,48 @@
+<%- include("partials/header") %>
+
+<section class="landing-hero">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="eyebrow-dot"></span> FOR THE THOUGHTFUL READER</p>
+    <h1>Keep the ideas<br>that <em>stay with you.</em></h1>
+    <p class="hero-description">A home for the books you’ve finished and the passages, thoughts and tiny revelations you want to carry forward.</p>
+    <div class="hero-actions"><a class="button button-primary button-large" href="/register">Start your reading journal <%- include("partials/icon", { name: "arrow" }) %></a><a class="hero-secondary" href="/login">Already have an account? <span>Log in</span></a></div>
+    <div class="hero-proof"><span class="proof-stars"><%- include("partials/icon", { name: "sparkles" }) %></span><span>Your own reading space</span></div>
+  </div>
+  <%- include("partials/book-scene") %>
+</section>
+
+<section class="landing-details" data-reveal>
+  <div class="section-heading">
+    <p class="eyebrow">READ A LITTLE CLOSER</p>
+    <h2>More than a list of titles.</h2>
+    <p>Make your reading life feel like yours: personal, thoughtful and easy to return to.</p>
+  </div>
+  <div class="feature-grid">
+    <article class="feature-card" data-reveal><span class="feature-icon icon-bookmark"><%- include("partials/icon", { name: "bookmark" }) %></span><p class="feature-number">01</p><h3>Keep the thought</h3><p>Write down what moved you, challenged you or made something click.</p></article>
+    <article class="feature-card" data-reveal><span class="feature-icon icon-spark"><%- include("partials/icon", { name: "sparkles" }) %></span><p class="feature-number">02</p><h3>Give every book a feeling</h3><p>Rate each read and remember how it landed with you, long after the last page.</p></article>
+    <article class="feature-card" data-reveal><span class="feature-icon icon-shelf"><%- include("partials/icon", { name: "books" }) %></span><p class="feature-number">03</p><h3>Build your own shelf</h3><p>See your books together, then find a title or author whenever you need it.</p></article>
+  </div>
+</section>
+
+<section class="about-section" id="about" aria-labelledby="about-title" data-reveal>
+  <div class="about-overline"><p class="eyebrow">ABOUT DOGEAR</p><span>MADE FOR READERS WHO LIKE TO REMEMBER</span></div>
+  <div class="about-content">
+    <h2 id="about-title">Some ideas deserve a second life.</h2>
+    <div class="about-copy">
+      <p>Dogear is a reading journal for the books you finish and the thoughts you want to keep. Save a title, add your rating and date, then write down the idea, passage or feeling that stayed with you.</p>
+      <p>Over time, your shelf becomes more than a list. It becomes a record of what you were curious about, what changed your mind and what you want to revisit.</p>
+      <a class="about-link" href="/register">Start your reading journal <%- include("partials/icon", { name: "arrow" }) %></a>
+    </div>
+  </div>
+  <div class="about-principles">
+    <div><span>01</span><p>Remember the ideas</p></div>
+    <div><span>02</span><p>Keep your own notes</p></div>
+    <div><span>03</span><p>Return to your shelf</p></div>
+  </div>
+</section>
+
+<section class="landing-quote" data-reveal><span class="quote-decoration"><%- include("partials/icon", { name: "quote" }) %></span><blockquote>A book is a version of the world. If you do not like it, ignore it; or offer your own version in return.</blockquote><p>— Salman Rushdie</p></section>
+
+<section class="landing-cta" data-reveal><div><p class="eyebrow">YOUR NEXT CHAPTER</p><h2>Start with a book<br>you already love.</h2></div><a class="button button-light button-large" href="/register">Create your free library <%- include("partials/icon", { name: "arrow" }) %></a></section>
+
+<%- include("partials/footer") %>

@@ -1,9 +1,10 @@
 <%- include("partials/header") %>
 
-<div class="empty">
-  <h2><%= heading %></h2>
+<section class="error-page">
+  <p class="eyebrow">A LITTLE DETOUR</p>
+  <h1><%= heading %></h1>
   <p><%= message %></p>
-  <a class="btn btn-primary" href="/">Back to your books</a>
-</div>
+  <a class="button button-primary" href="/">Back to your library <%- include("partials/icon", { name: "arrow" }) %></a>
+</section>
 
 <%- include("partials/footer") %>

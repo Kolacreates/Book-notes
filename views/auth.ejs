@@ -1,0 +1,36 @@
+<%- include("partials/header") %>
+<%
+  const isLogin = mode === "login";
+  const messages = {
+    "1": "That email and password don’t match. Try again.",
+    short: "Use at least 8 characters for your password.",
+    taken: "That email already has an account. Log in instead."
+  };
+%>
+
+<section class="auth-layout">
+  <div class="auth-card">
+    <span class="auth-monogram"><span class="brand-mark"><%- include("partials/icon", { name: "open-book", iconClass: "brand-icon" }) %></span></span>
+    <p class="eyebrow"><%= isLogin ? "WELCOME BACK" : "YOUR PERSONAL LIBRARY" %></p>
+    <h1><%= isLogin ? "Sign in" : "Create an account" %></h1>
+    <p class="auth-intro"><%= isLogin ? "Your reading notes are waiting." : "A thoughtful little home for your reading life." %></p>
+
+    <% if (locals.error && messages[error]) { %><p class="alert" role="alert"><%= messages[error] %></p><% } %>
+
+    <form method="POST" action="<%= isLogin ? '/login' : '/register' %>">
+      <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com"></div>
+      <div class="field"><label for="password">Password</label><input id="password" name="password" type="password" required <%= isLogin ? '' : 'minlength=8' %> autocomplete="<%= isLogin ? 'current-password' : 'new-password' %>" placeholder="<%= isLogin ? 'Your password' : 'At least 8 characters' %>"><% if (!isLogin) { %><p class="hint">Choose at least 8 characters.</p><% } %></div>
+      <button class="button button-primary auth-submit" type="submit"><%= isLogin ? "Sign in to your library" : "Create your account" %><%- include("partials/icon", { name: "arrow" }) %></button>
+    </form>
+
+    <p class="switch"><% if (isLogin) { %>New to Dogear? <a href="/register">Create an account</a><% } else { %>Already have a library? <a href="/login">Sign in</a><% } %></p>
+    <p class="privacy-note"><%- include("partials/icon", { name: "bookmark" }) %> A thoughtful home for your reading life.</p>
+  </div>
+
+  <div class="auth-book-panel">
+    <p class="eyebrow">A SHELF OF IDEAS</p>
+    <%- include("partials/auth-book-wall") %>
+  </div>
+</section>
+
+<%- include("partials/footer") %>

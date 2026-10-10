@@ -1,64 +1,100 @@
 <%- include("partials/header") %>
-<% const current = locals.sort || "recent"; %>
+<%
+  const current = locals.sort || "recent";
+  const ratedBooks = books.filter(book => Number.isFinite(Number(book.rating)));
+  const averageRating = ratedBooks.length
+    ? (ratedBooks.reduce((total, book) => total + Number(book.rating), 0) / ratedBooks.length).toFixed(1)
+    : "—";
+  const notesCount = books.filter(book => book.notes && book.notes.trim().length > 0).length;
+%>
 
-<div class="page-head">
+<section class="library-intro" aria-labelledby="library-title">
   <div>
-    <h1>Reading log</h1>
-    <p class="count"><%= books.length %> <%= books.length === 1 ? "book" : "books" %> read, with notes</p>
+    <p class="eyebrow">YOUR PERSONAL LIBRARY</p>
+    <h1 id="library-title">A life in books.</h1>
+    <p class="intro-copy">The stories you’ve read, the ideas you’ve kept, all in one place.</p>
   </div>
-  <div class="sort" role="group" aria-label="Sort books">
-    <a class="<%= current === 'recent' ? 'active' : '' %>" href="/?sort=recent">Newest</a>
-    <a class="<%= current === 'rating' ? 'active' : '' %>" href="/?sort=rating">Highest rated</a>
-    <a class="<%= current === 'title' ? 'active' : '' %>" href="/?sort=title">Title A to Z</a>
-  </div>
-</div>
+  <a class="button button-primary add-book-button" href="/new"><%- include("partials/icon", { name: "plus" }) %> Add a book</a>
+</section>
 
-<% if (books.length === 0) { %>
-  <div class="empty">
-    <h2>No books yet</h2>
-    <p>Add the first book you've read, with your rating and notes.</p>
-    <a class="btn btn-primary" href="/new">Add a book</a>
-  </div>
-<% } else { %>
-  <ol class="shelf">
-    <% books.forEach(book => { %>
-      <li class="entry">
-        <div class="cover c<%= book.id % 5 %>">
-          <span class="cover-title"><%= book.title %></span>
-          <img src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-L.jpg?default=false"
-               alt="Cover of <%= book.title %>" loading="lazy" onerror="this.remove()">
-        </div>
+<section class="library-stats" aria-label="Reading library overview">
+  <div class="stat-card"><span class="stat-icon icon-books"><%- include("partials/icon", { name: "books" }) %></span><div><strong><%= books.length %></strong><span>books collected</span></div></div>
+  <div class="stat-card"><span class="stat-icon icon-rating"><%- include("partials/icon", { name: "star" }) %></span><div><strong><%= averageRating %><small>/10</small></strong><span>average rating</span></div></div>
+  <div class="stat-card"><span class="stat-icon icon-notes"><%- include("partials/icon", { name: "book" }) %></span><div><strong><%= notesCount %></strong><span>notes saved</span></div></div>
+</section>
 
-        <div class="entry-body">
-          <div class="entry-top">
-            <div>
-              <h2><%= book.title %></h2>
-              <p class="author">by <%= book.author %></p>
+<section class="collection" aria-labelledby="collection-title">
+  <div class="collection-heading">
+    <div>
+      <p class="eyebrow">THE GOOD PART</p>
+      <h2 id="collection-title">Your collection <span class="collection-count"><%= books.length %></span></h2>
+    </div>
+    <% if (books.length > 0) { %>
+      <div class="library-tools">
+        <label class="search-box">
+          <span class="sr-only">Search your books</span>
+          <span class="search-icon"><%- include("partials/icon", { name: "search" }) %></span>
+          <input id="filter" type="search" placeholder="Search your books" autocomplete="off">
+        </label>
+        <label class="sort-select-label">
+          <span class="sr-only">Sort books</span>
+          <select id="sort-books" aria-label="Sort books">
+            <option value="recent" <%= current === "recent" ? "selected" : "" %>>Recently read</option>
+            <option value="rating" <%= current === "rating" ? "selected" : "" %>>Highest rated</option>
+            <option value="title" <%= current === "title" ? "selected" : "" %>>Title A–Z</option>
+          </select>
+        </label>
+      </div>
+    <% } %>
+  </div>
+
+  <% if (books.length === 0) { %>
+    <div class="empty-state">
+      <div class="empty-illustration"><%- include("partials/icon", { name: "open-book" }) %></div>
+      <p class="eyebrow">A FRESH PAGE</p>
+      <h3>Your library starts here.</h3>
+      <p>Add the first book you’ve read and save what you want to remember.</p>
+      <a class="button button-primary" href="/new">Add your first book</a>
+    </div>
+  <% } else { %>
+    <ol class="book-list" id="book-list">
+      <% books.forEach((book, index) => { %>
+        <li class="book-entry" data-search="<%= `${book.title} ${book.author}`.toLowerCase() %>" style="--entry-index: <%= index %>">
+          <article class="book-card">
+            <div class="book-cover cover-tone-<%= index % 5 %>">
+              <span class="cover-fallback"><span class="cover-kicker">FROM YOUR SHELF</span><span class="cover-title"><%= book.title %></span><span class="cover-rule"></span><span class="cover-author"><%= book.author %></span></span>
+              <% if (book.cover_url || book.isbn) { %>
+                <img src="<%= book.cover_url || `https://covers.openlibrary.org/b/isbn/${book.isbn}-L.jpg?default=false` %>" alt="Cover of <%= book.title %>" loading="lazy" onerror="this.remove()">
+              <% } %>
             </div>
-            <div class="score" aria-label="Rated <%= book.rating %> out of 10">
-              <strong><%= book.rating %></strong><span>/10</span>
-              <div class="segs">
-                <% for (let i = 1; i <= 10; i++) { %><i class="<%= i <= book.rating ? 'on' : '' %>"></i><% } %>
+            <div class="book-content">
+              <div class="book-topline">
+                <span class="book-label">READING NOTE</span>
+                <% if (book.rating) { %><span class="rating-pill"><%- include("partials/icon", { name: "star" }) %> <%= book.rating %><span class="rating-total">/10</span></span><% } %>
+              </div>
+              <h3><%= book.title %></h3>
+              <p class="book-author">by <%= book.author %></p>
+              <% if (book.date_read) { %>
+                <p class="read-date"><%- include("partials/icon", { name: "calendar" }) %> Finished <time datetime="<%= new Date(book.date_read).toISOString().slice(0, 10) %>"><%= new Date(book.date_read).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) %></time></p>
+              <% } %>
+              <% if (book.notes && book.notes.trim()) { %>
+                <blockquote class="book-note"><p class="notes"><%= book.notes %></p></blockquote>
+              <% } else { %>
+                <p class="no-note">No notes yet. Add a thought while it’s still fresh.</p>
+              <% } %>
+              <div class="book-actions">
+                <a class="text-action" href="/edit/<%= book.id %>">Edit note <%- include("partials/icon", { name: "arrow" }) %></a>
+                <form method="POST" action="/books/<%= book.id %>?_method=DELETE" onsubmit="return confirm('Delete this book and its notes?')">
+                  <button class="text-action delete-action" type="submit">Remove</button>
+                </form>
               </div>
             </div>
-          </div>
-
-          <% if (book.date_read) { %>
-            <p class="read-on">Read on <%= new Date(book.date_read).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) %></p>
-          <% } %>
-
-          <p class="notes"><%= book.notes %></p>
-
-          <div class="actions">
-            <a class="btn" href="/edit/<%= book.id %>">Edit</a>
-            <form method="POST" action="/books/<%= book.id %>?_method=DELETE" onsubmit="return confirm('Delete this book and its notes?')">
-              <button class="btn btn-danger" type="submit">Delete</button>
-            </form>
-          </div>
-        </div>
-      </li>
-    <% }) %>
-  </ol>
-<% } %>
+          </article>
+        </li>
+      <% }) %>
+    </ol>
+    <p class="no-matches" id="nomatch" hidden>No books match that search. Try another title or author.</p>
+  <% } %>
+</section>
 
 <%- include("partials/footer") %>

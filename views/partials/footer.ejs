@@ -1,6 +1,22 @@
   </main>
   <footer class="site-footer">
-    <div class="wrap">Covers from Open Library. Built with Express and PostgreSQL.</div>
+    <% const socialProfiles = locals.socialProfiles || {}; const socialLinks = [
+      { name: "GitHub", icon: "github", href: socialProfiles.github || "https://github.com/Kolacreates" },
+      { name: "LinkedIn", icon: "linkedin", href: socialProfiles.linkedin || "https://linkedin.com/in/samad-badmus"},
+      { name: "X", icon: "x", href: socialProfiles.x }
+    ]; %>
+    <div class="site-footer-inner">
+      <nav class="footer-socials" aria-label="Social profiles">
+        <% socialLinks.forEach((social) => { %>
+          <% if (social.href) { %>
+            <a class="footer-social-link" href="<%= social.href %>" target="_blank" rel="me noopener noreferrer" aria-label="<%= social.name %> profile (opens in a new tab)"><%- include("icon", { name: social.icon }) %></a>
+          <% } else { %>
+            <span class="footer-social-link is-unconfigured" title="Add your <%= social.name %> profile URL" aria-label="<%= social.name %> profile URL not set"><%- include("icon", { name: social.icon }) %></span>
+          <% } %>
+        <% }); %>
+      </nav>
+      <p class="footer-copy">Copyright © <%= new Date().getFullYear() %> Dogear</p>
+    </div>
   </footer>
 </body>
 </html>
