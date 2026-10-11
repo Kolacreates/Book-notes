@@ -159,3 +159,84 @@
   .sample-note { right: -13px; }
   .landing-cta .button { width: 100%; }
 }
+
+/* Comfortable reading sizes across the app. */
+body { font-size: 16px; }
+.brand { font-size: 22px; }
+.nav-link { font-size: 15px; }
+.user-chip { font-size: 14px; }
+.button { font-size: 16px; }
+.button-large { font-size: 17px; }
+.eyebrow { font-size: 12px; }
+.intro-copy, .hero-description { font-size: 17px; }
+.stat-card div > span, .stat-card strong small { font-size: 14px; }
+.collection-count { font-size: 13px; }
+.search-box input { font-size: 16px; }
+.sort-select-label select { font-size: 14px; }
+.book-label { font-size: 12px; }
+.rating-pill { font-size: 15px; }
+.rating-total { font-size: 13px; }
+.book-author { font-size: 15px; }
+.read-date { font-size: 13px; }
+.notes { font-size: 18px; }
+.no-note, .no-matches, .empty-state > p:not(.eyebrow) { font-size: 16px; }
+.text-action, .back-link { font-size: 14px; }
+.more { font-size: 13px; }
+.form-heading > p:not(.eyebrow), .form-section-heading p { font-size: 15px; }
+.field label { font-size: 14px; }
+.field input, .field textarea { font-size: 16px; }
+.hint { font-size: 13px; }
+.optional-label { font-size: 12px; }
+.rating-input-wrap > span { font-size: 13px; }
+.wall-cover-kicker { font-size: clamp(8px, .8vw, 10px); }
+.wall-cover-author { font-size: clamp(8px, .82vw, 10px); }
+.auth-intro { font-size: 15px; }
+.alert, .switch { font-size: 14px; }
+.privacy-note { font-size: 13px; }
+.footer-copy { font-size: 14px; }
+.hero-secondary, .hero-proof { font-size: 13px; }
+.section-heading > p:last-child, .feature-card > p:last-child, .about-copy p { font-size: 15px; }
+.feature-number { font-size: 12px; }
+.about-overline > span { font-size: 12px; }
+.about-link { font-size: 13px; }
+.about-principles p { font-size: 14px; }
+.landing-quote p { font-size: 12px; }
+.page-kicker, .art-cover-kicker, .sample-note-label { font-size: 10px; }
+.page-author, .page-rating, .sample-note-source { font-size: 12px; }
+.art-open-cue, .note-toggle { font-size: 12px; }
+
+@media (max-width: 680px) {
+  body { font-size: 16px; }
+  .brand { font-size: 20px; }
+  .logout-link { font-size: 13px; }
+  .header-add { font-size: 14px; }
+  .intro-copy, .hero-description { font-size: 16px; }
+  .add-book-button { font-size: 13px; }
+  .stat-card div > span, .stat-card strong small { font-size: 12px; }
+  .collection-count { font-size: 12px; }
+  .cover-title { font-size: 15px; }
+  .cover-author { font-size: 10px; }
+  .book-label { font-size: 10px; }
+  .rating-pill { font-size: 13px; }
+  .book-author { font-size: 13px; }
+  .read-date { font-size: 12px; }
+  .notes { font-size: 16px; }
+  .text-action { font-size: 13px; }
+  .form-section-heading p { font-size: 14px; }
+  .wall-cover-kicker { font-size: 7px; }
+  .wall-cover-author { font-size: 7px; }
+  .footer-copy { font-size: 12px; }
+  .feature-card > p:last-child, .about-copy p { font-size: 14px; }
+  .about-principles p { font-size: 13px; }
+}
+
+@media (max-width: 400px) {
+  .intro-copy { font-size: 15px; }
+  .stat-card div > span, .stat-card strong small { font-size: 11px; }
+  .collection-count { font-size: 11px; }
+  .book-label { font-size: 9px; }
+  .book-author { font-size: 12px; }
+  .read-date { font-size: 11px; }
+  .text-action { font-size: 12px; }
+  .footer-copy { font-size: 12px; }
+}
