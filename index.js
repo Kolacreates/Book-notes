@@ -284,6 +284,16 @@ app.post("/logout", (req, res) => {
 app.use((req, res) => {
   showError(res, 404, "Page not found", "That page doesn't exist.");
 });
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+
+
+
+
+
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+}
+
+module.exports = app;
+
