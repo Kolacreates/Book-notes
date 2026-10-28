@@ -1,4 +1,5 @@
 import express from "express";
+import ejs from "ejs";
 import axios from "axios";
 import bodyParser from "body-parser";
 import pg from "pg";
@@ -24,6 +25,9 @@ const db = new pg.Client({
 db.connect().catch((err) => {
   console.error("Database connection failed:", err.message);
 });
+
+app.engine("ejs", ejs.__express);
+app.set("view engine", "ejs");
 
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
